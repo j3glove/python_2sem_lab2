@@ -3,16 +3,19 @@ import random
 
 
 
-def factorial(n):
-    fact = 1
-    for i in range(1 , 2*n):
-        fact = fact*i
+def factorial(n,oldfact):
+    if oldfact !=1:
+        fact = oldfact * (2*n - 1) * (2*n - 2)
+    else:
+        return 1
     return fact
 
-def algorithm(n, X):
+def algorithm(n, X,oldfact):
+    fact = 2 * n - 1
+    currentfact = factorial(fact, oldfact)
     det = np.linalg.det(np.linalg.matrix_power(X, (2 * n - 1)))
-    result = det/factorial(n) * (-1)**n
-    return result
+    result = det/factorial(n, fact) * (-1)**n
+    return result, currentfact
 
 
 try:
@@ -30,10 +33,13 @@ try:
         else:
             print("Ваше число не входит в данный диапазон")
 
+
     X = [[0] * K for i in range(K)]  # создание матрицы X
     for i in range(K):
         for j in range(K):
             X[i][j] = random.randint(-10, 10)
+
+    rang = np.linalg.matrix_rank(X)
 
     #X = np.array([
     #    [7, -1, 3],
@@ -43,13 +49,21 @@ try:
 
     summa = 0
     n=1
+    summastr=""
+    oldfact = 1
+    tempsumma=0
+    fraction = 0
     while True:
-        summa += algorithm(n,X)
+        tempsumma,oldfact=algorithm(n,X, oldfact)
+        summa += tempsumma
         n+=1
-        summastr = str(summa)
-        if len(summastr) - summastr.find('.') >= t:
-            print(summa)
+        fraction = abs(summa) - abs(int(summa))
+        print(n - 1, ' / ', summa)
+        if fraction <= 10 ** (-t):
+            print("Конечный результат:    , {1:.21f}".format(t, summa))
             break
+
+
 
 except:
     print("Произошла ошибка")
