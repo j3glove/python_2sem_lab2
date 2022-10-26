@@ -58,12 +58,10 @@ try:
         summa += tempsumma
         n+=1
         fraction = abs(summa) - abs(int(summa))
-        print(n - 1, ' / ', summa)
-        if fraction <= 10 ** (-t):
-            print("Конечный результат:    , {1:.21f}".format(t, summa))
+        print("Промежуточный результат №",n - 1, ' / ', summa)
+        if fraction < 10 ** (-t):
+            print("Конечный результат:    ", summa)
             break
-
-
 
 except:
     print("Произошла ошибка")
