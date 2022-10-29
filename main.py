@@ -1,8 +1,6 @@
 import numpy as np
 import random
 
-
-
 def factorial(n,oldfact):
     if oldfact !=1:
         fact = oldfact * (2*n - 1) * (2*n - 2)
@@ -37,15 +35,13 @@ try:
     X = [[0] * K for i in range(K)]  # создание матрицы X
     for i in range(K):
         for j in range(K):
-            X[i][j] = random.randint(-10, 10)
+            X[i][j] = random.randint(-9, 9)
 
-    rang = np.linalg.matrix_rank(X)
+    X = np.array(X)
 
-    #X = np.array([
-    #    [7, -1, 3],
-    #    [3, 1, -2],
-    #    [3, 8, -5]
-    #])
+    X = X/10
+
+    print(X)
 
     summa = 0
     n=1
@@ -57,9 +53,8 @@ try:
         tempsumma,oldfact=algorithm(n,X, oldfact)
         summa += tempsumma
         n+=1
-        fraction = abs(summa) - abs(int(summa))
-        print("Промежуточный результат №",n - 1, ' / ', summa)
-        if fraction < 10 ** (-t):
+        print("Промежуточный результат №",n - 1, ' / ', summa, " ", tempsumma)
+        if abs(tempsumma) < (10 ** (-t)):
             print("Конечный результат:    ", summa)
             break
 
